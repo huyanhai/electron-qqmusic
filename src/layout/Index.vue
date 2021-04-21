@@ -6,9 +6,10 @@
         <p class="title">在线音乐</p>
         <div
           class="item"
-          :class="{ active: index == 1 }"
+          :class="{ active: `online_${index}` == active }"
           v-for="(item, index) in onlineMusic"
           :key="index"
+          @click="setActive(index, 'online')"
         >
           <img :src="item.icon" />
           <span class="text">
@@ -18,7 +19,13 @@
       </section>
       <section class="my-music m-aside-nav">
         <p class="title">我的音乐</p>
-        <div class="item" v-for="(item, index) in myMusic" :key="index">
+        <div
+          class="item"
+          :class="{ active: `my_${index}` == active }"
+          v-for="(item, index) in myMusic"
+          :key="index"
+          @click="setActive(index, 'my')"
+        >
           <img :src="item.icon" />
           <span class="text">
             {{ item.name }}
@@ -38,7 +45,7 @@ type nav = {
   url: string;
   icon: string;
 };
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "Layout",
@@ -83,7 +90,11 @@ export default defineComponent({
         icon: require("../assets/lv_history.svg"),
       },
     ];
-    return { onlineMusic, myMusic };
+    let active = ref("");
+    function setActive(item: number, type: string) {
+      active.value = `${type}_${item}`;
+    }
+    return { onlineMusic, myMusic, active, setActive };
   },
 });
 </script>
@@ -105,6 +116,7 @@ export default defineComponent({
     padding: 50px 25px 0 25px;
     .logo {
       width: 88px;
+      margin-left: 15px;
     }
     .m-aside-nav {
       .title {
@@ -127,6 +139,7 @@ export default defineComponent({
         margin-bottom: 12px;
         border-radius: 4px;
         position: relative;
+        cursor: default;
         &:hover {
           background: $hover-bg-color;
         }
