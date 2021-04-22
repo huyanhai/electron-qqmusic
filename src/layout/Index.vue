@@ -2,104 +2,32 @@
   <el-container class="container">
     <el-aside>
       <img src="https://y.qq.com/mediastyle/yqq/img/logo.png" class="logo" />
-      <section class="online-music m-aside-nav">
-        <p class="title">在线音乐</p>
-        <div
-          class="item"
-          :class="{ active: `online_${index}` == active }"
-          v-for="(item, index) in onlineMusic"
-          :key="index"
-          @click="setActive(index, 'online')"
-        >
-          <img :src="item.icon" />
-          <span class="text">
-            {{ item.name }}
-          </span>
-        </div>
-      </section>
-      <section class="my-music m-aside-nav">
-        <p class="title">我的音乐</p>
-        <div
-          class="item"
-          :class="{ active: `my_${index}` == active }"
-          v-for="(item, index) in myMusic"
-          :key="index"
-          @click="setActive(index, 'my')"
-        >
-          <img :src="item.icon" />
-          <span class="text">
-            {{ item.name }}
-          </span>
-        </div>
-      </section>
+      <NavBar />
     </el-aside>
     <el-main>
+      <TopBar />
       <router-view />
     </el-main>
   </el-container>
 </template>
 
 <script lang="ts">
-type nav = {
-  name: string;
-  url: string;
-  icon: string;
-};
-import { defineComponent, ref } from "vue";
-
+import { defineComponent } from "vue";
+import NavBar from "./NavBar.vue";
+import TopBar from "./TopBar.vue";
 export default defineComponent({
   name: "Layout",
-  components: {},
-  setup() {
-    let onlineMusic: nav[] = [
-      {
-        name: "音乐馆",
-        url: "",
-        icon: require("../assets/lv_music_hall.svg"),
-      },
-      {
-        name: "视频",
-        url: "",
-        icon: require("../assets/lv_vedio.svg"),
-      },
-      {
-        name: "电台",
-        url: "",
-        icon: require("../assets/lv_diantai.svg"),
-      },
-    ];
-    let myMusic: nav[] = [
-      {
-        name: "我喜欢",
-        url: "",
-        icon: require("../assets/lv_ilike.svg"),
-      },
-      {
-        name: "本地歌曲",
-        url: "",
-        icon: require("../assets/lv_local.svg"),
-      },
-      {
-        name: "下载歌曲",
-        url: "",
-        icon: require("../assets/lv_download.svg"),
-      },
-      {
-        name: "最近播放",
-        url: "",
-        icon: require("../assets/lv_history.svg"),
-      },
-    ];
-    let active = ref("");
-    function setActive(item: number, type: string) {
-      active.value = `${type}_${item}`;
-    }
-    return { onlineMusic, myMusic, active, setActive };
+  components: {
+    NavBar,
+    TopBar,
   },
 });
 </script>
 
 <style lang="scss">
+* {
+  cursor: default;
+}
 .container {
   height: 100%;
   display: flex;
@@ -118,50 +46,14 @@ export default defineComponent({
       width: 88px;
       margin-left: 15px;
     }
-    .m-aside-nav {
-      .title {
-        font-size: 12px;
-        color: $font-dark;
-        opacity: 0.8;
-        padding-left: 15px;
-        margin-top: 25px;
-        margin-bottom: 15px;
-        font-weight: 300;
-      }
-      .item {
-        font-size: 12px;
-        color: $font-dark;
-        font-weight: 400;
-        display: flex;
-        align-items: center;
-        padding-left: 15px;
-        height: 30px;
-        margin-bottom: 12px;
-        border-radius: 4px;
-        position: relative;
-        cursor: default;
-        &:hover {
-          background: $hover-bg-color;
-        }
-        &.active {
-          background: linear-gradient(to right, $blue 0%, $green 100%);
-          color: $white;
-        }
-        img {
-          width: 18px;
-          opacity: 0.6;
-          margin-right: 5px;
-        }
-      }
-      &.my-music {
-        margin-top: 45px;
-      }
-    }
   }
   .el-main {
     background: $main-bg-color;
     flex: 1 0 auto;
     width: 50%;
+    box-sizing: border-box;
+    padding: 0 40px;
+    min-width: 614px;
   }
 }
 </style>
