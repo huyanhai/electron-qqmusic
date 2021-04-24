@@ -6,7 +6,9 @@
     </el-aside>
     <el-main>
       <TopBar />
-      <router-view />
+      <div class="content">
+        <router-view />
+      </div>
     </el-main>
   </el-container>
 </template>
@@ -52,8 +54,11 @@ export default defineComponent({
     flex: 1 0 auto;
     width: 50%;
     box-sizing: border-box;
-    padding: 0 40px;
     min-width: 614px;
+    padding: 0;
+    .content {
+      padding: 0 40px;
+    }
   }
 }
 </style>

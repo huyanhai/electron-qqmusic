@@ -3,8 +3,17 @@ $main-bg-color: #f6f6f6;
 $hover-bg-color: #d8d8d8;
 $blue: #3bd6bf;
 $green: #42c27c;
+$dark: #000000;
 $white: #ffffff;
+$light-gary: #dddddd;
+$mid-gary: #717171;
 
 $font-dark: #606060;
 $font-light-gary: grey;
+$font-lightl-gary: #93979c;
 $font-gary: #c5c5c5;
+
+$filter-gary: invert(49%) sepia(0%) saturate(2224%) hue-rotate(316deg)
+  brightness(87%) contrast(75%);
+$filter-green: invert(87%) sepia(68%) saturate(566%) hue-rotate(68deg)
+  brightness(84%) contrast(78%);

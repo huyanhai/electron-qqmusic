@@ -90,7 +90,7 @@ export default defineComponent({
         iconActive: require("../assets/lv_history_a.svg"),
       },
     ];
-    let active = ref("online_0");
+    let active = ref<string>("online_0");
     function setActive(item: number, type: string) {
       active.value = `${type}_${item}`;
     }
