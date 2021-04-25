@@ -9,6 +9,7 @@
       <div class="content">
         <router-view />
       </div>
+      <Player />
     </el-main>
   </el-container>
 </template>
@@ -17,11 +18,13 @@
 import { defineComponent } from "vue";
 import NavBar from "./NavBar.vue";
 import TopBar from "./TopBar.vue";
+import Player from "./Player.vue";
 export default defineComponent({
   name: "Layout",
   components: {
     NavBar,
     TopBar,
+    Player,
   },
 });
 </script>
@@ -56,8 +59,23 @@ export default defineComponent({
     box-sizing: border-box;
     min-width: 614px;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .m-topbar {
+      flex: 0 0 auto;
+    }
     .content {
+      flex: 1 0 auto;
       padding: 0 40px;
+      overflow-y: scroll;
+      height: 50vh;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .m-player {
+      flex: 0 0 auto;
     }
   }
 }

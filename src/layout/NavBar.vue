@@ -46,6 +46,12 @@ export default defineComponent({
   setup() {
     let onlineMusic: nav[] = [
       {
+        name: "推荐",
+        url: "",
+        icon: require("../assets/lv_start.svg"),
+        iconActive: require("../assets/lv_start_a.svg"),
+      },
+      {
         name: "音乐馆",
         url: "",
         icon: require("../assets/lv_music_hall.svg"),
