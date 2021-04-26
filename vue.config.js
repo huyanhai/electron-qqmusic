@@ -8,6 +8,11 @@ module.exports = {
       },
     },
   },
+  pluginOptions: {
+    electronBuilder: {
+      nodeIntegration: true,
+    },
+  },
   chainWebpack: (config) => {
     config.module.rule("svg").exclude.add(path.resolve("src/icons")).end();
     config.module

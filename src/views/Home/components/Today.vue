@@ -14,18 +14,42 @@
         name="arrow_left"
       ></svg-icon>
       <div class="more-post">
-        <Post />
+        <Post
+          v-for="(item, index) in songList"
+          :key="index"
+          :item="item"
+          @click="setPlaying(item)"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { useStore } from "vuex";
 import Post from "./Post.vue";
+import { Song } from "../../../types/playing";
 export default defineComponent({
   components: {
     Post,
+  },
+  setup() {
+    let songList = ref<Song[]>([
+      {
+        name: "Love Story (Taylor's Version)",
+        post:
+          "https://y.qq.com/music/photo_new/T002R300x300M000003B9bHD26W2cD_3.jpg?max_age=2592000",
+        url:
+          "http://dl.stream.qqmusic.qq.com/C400001Tqjgb3VecMP.m4a?guid=7824868040&vkey=8AFD7234B3FDAEBD607894D4FABBD9D54D50D5F59846C6D32B56A9AFF8F4664060C415A4DC447BDD8E14A0F9306F0C4BFE0711059C3B3284&uin=810839700&fromtag=66",
+        singer: "Taylor Swift",
+      },
+    ]);
+    let store = useStore();
+    function setPlaying(item: Song) {
+      store.commit("SET_PLAYING", item);
+    }
+    return { songList, setPlaying };
   },
 });
 </script>

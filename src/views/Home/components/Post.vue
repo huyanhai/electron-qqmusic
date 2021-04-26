@@ -1,9 +1,7 @@
 <template>
   <div class="m-post">
     <div class="post">
-      <img
-        src="https://y.qq.com/music/photo_new/T002R300x300M000001SJnKq4E3nHB.jpg?max_age=2592000"
-      />
+      <img :src="$attrs.item?.post" />
       <i class="play"></i>
       <span class="m-playing">
         <svg-icon icon-class="headset" name="headset"></svg-icon>
