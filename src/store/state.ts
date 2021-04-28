@@ -5,4 +5,5 @@ export default {
     post: "",
     singer: "",
   },
+  playList: [],
 };

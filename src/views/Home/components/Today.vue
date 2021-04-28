@@ -48,6 +48,7 @@ export default defineComponent({
     let store = useStore();
     function setPlaying(item: Song) {
       store.commit("SET_PLAYING", item);
+      store.commit("SET_PLAY_LIST", item);
     }
     return { songList, setPlaying };
   },

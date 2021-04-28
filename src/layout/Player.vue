@@ -1,3 +1,5 @@
+/* * @Author: huyanhai * @Date: 2021-04-28 21:05:14 * @Last Modified by:
+huyanhai * @Last Modified time: 2021-04-28 21:05:14 */
 <template>
   <div class="m-player">
     <div class="m-progress">
@@ -64,11 +66,13 @@
           {{ currentTimes || "00:00" }} / {{ musciAllTimes || "00:00" }}
         </span>
         <svg-icon class="item" icon-class="bv_lyric" name="bv_lyric"></svg-icon>
-        <svg-icon
-          class="item"
-          icon-class="bv_playlist"
-          name="bv_playlist"
-        ></svg-icon>
+        <span class="last-item" @click="$emit('playMusicList')">
+          <svg-icon class="item" icon-class="bv_playlist" name="bv_playlist">
+          </svg-icon>
+          <i class="lists-num" v-if="playingList.length > 0">
+            {{ playingList.length }}
+          </i>
+        </span>
       </div>
     </div>
   </div>
@@ -86,15 +90,18 @@ import { useStore } from "vuex";
 let timer: any = null;
 
 export default defineComponent({
+  emits: ["playMusicList"],
   setup() {
-    let playing = ref<boolean>(false);
     let store = useStore();
+    let playing = ref<boolean>(false);
     let musciAllTimes = ref<string>(""); // 音乐总时长
     let currentTimes = ref<string>(""); // 当前播放时长
     let process = ref<number>(0);
     let audio = ref(null as HTMLAudioElement | null);
     let defaultPost: string = require("../assets/minidefaultCoverImage@2x.png");
     let playingMusic = computed(() => store.getters.playing);
+    let playingList = computed(() => store.getters.playList);
+
     // 格式化音乐时长
     function formateTime(time: string | number): string | number {
       return time > 10 ? time : "0" + time;
@@ -114,6 +121,7 @@ export default defineComponent({
       process.value =
         ((audio.value?.currentTime || 0) / (audio.value?.duration || 1)) * 100;
     }
+
     watch([playingMusic, playing], ([newVal1], [oldVal1]) => {
       if (newVal1 !== oldVal1) {
         currentTimes.value = "00:00";
@@ -126,9 +134,14 @@ export default defineComponent({
       if (audio.value?.paused) {
         playing.value = true;
         timer = setTimeout(() => {
-          audio.value?.play();
-          setTimes(audio.value?.duration || 0);
-          audio.value?.addEventListener("timeupdate", updateProcess);
+          try {
+            audio.value?.play();
+            setTimes(audio.value?.duration || 0);
+            audio.value?.addEventListener("timeupdate", updateProcess);
+          } catch (error) {
+            console.log("error", error);
+            process.value = 0;
+          }
         }, 100);
       } else {
         audio.value?.pause();
@@ -142,6 +155,7 @@ export default defineComponent({
       musciAllTimes,
       currentTimes,
       process,
+      playingList,
     };
   },
 });
@@ -161,7 +175,6 @@ export default defineComponent({
       height: 2px;
       width: 20%;
       display: block;
-      transition: all 0.5s;
     }
   }
   .m-songs {
@@ -270,11 +283,29 @@ export default defineComponent({
         margin-left: 10px;
         cursor: pointer;
         filter: $filter-gary;
+      }
+      .last-item {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
         &:hover {
-          filter: $filter-green;
+          .lists-num {
+            color: $green;
+          }
+          .item {
+            filter: $filter-green;
+          }
         }
+      }
+      .lists-num {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        color: $mid-gary;
+        margin-left: 2px;
       }
     }
   }
 }
+
 </style>

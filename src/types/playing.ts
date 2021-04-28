@@ -6,4 +6,5 @@ export interface Song {
 }
 export interface State {
   playing: Song;
+  playList: Song[];
 }
